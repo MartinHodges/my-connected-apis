@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: my-connected-apis
+  profiles:
+    active: standalone
+  # datasources are to be defined within profile specific properties files
+
+application:
+  dynamic-db-config:
+    enabled: false
+    filename: ""
+    refresh: 5
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus
+  endpoint:
+    health:
+      probes:
+        enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.nam}
+  server:
+    port: 8081
+
+server:
+  port: 8080
+  shutdown: graceful
+
+# log SQL commands
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    org:springframework.security: INFO

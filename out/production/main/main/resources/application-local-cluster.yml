@@ -1,0 +1,37 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://db-cluster-rw.pg.svc:5432/myapp?currentSchema=myapp
+    # username: injected using Vault Injector
+    # password: injected using Vault Injector
+    hikari:
+      connectionTimeout: 20000
+      maximumPoolSize: 5
+
+  jpa:
+    properties:
+      hibernate:
+        default_schema: "myapp"
+        # pretty print SLQ commands
+        format_sql: true
+    hibernate:
+      # <create | create-drop | update | validate | none>
+      ddl-auto: create
+    # enable debugging of SQL commands
+    show-sql: true
+  liquibase:
+    enabled: true
+    default_schema: "myapp"
+
+application:
+  dynamic-db-config:
+    enabled: true
+    filename: "/vault/secrets/myapp-db.creds"
+    refresh: 5
+
+
+# log SQL commands
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    com.requillion_solutions: DEBUG

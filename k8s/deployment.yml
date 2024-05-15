@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-connected-apis
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-connected-apis
+  template:
+    metadata:
+      labels:
+        app: my-connected-apis
+    spec:
+      containers:
+      - name: my-connected-apis
+        image: my-connected-apis
+        imagePullPolicy: IfNotPresent
+        ports:
+          - containerPort: 8080
+        env:
+          # Note that the following environment variable is converted to a
+          # property override called spring.profiles.active when read by Spring
+          - name: SPRING_PROFILES_ACTIVE
+            value: dev
+          - name: STATIC_DB_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: static-db-credentials
+                key: username
+          - name: STATIC_DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: static-db-credentials
+                key: password
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-connected-apis
+  namespace: default
+spec:
+  selector:
+    app: my-connected-apis
+  type: NodePort
+  ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: 30080
