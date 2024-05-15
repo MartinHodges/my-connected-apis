@@ -1,8 +1,15 @@
 # My Connected API
-The aim of this project is to provide a test API using a Spring Boot 
-application that can be used within a Kubernetes cluster.
-It was created to use with the my-connected-app Next.js web
-application.
+The aim of this project is to provide a test web
+application using Spring Boot that can
+be used within a Kubernetes cluster.
+
+It was created to experiment with using private APIs
+within a Kubernetes cluster along with the
+[my-connected-app](https://github.com/MartinHodges/my-connected-app)
+Next.js web application.
+
+You can find a more detailed explanation of the project in my associated
+[Medium article](https://medium.com/@martin.hodges/how-to-access-your-apis-from-next-js-within-kubernetes-86677770f941).
 
 ## Profiles
 The application has been created with a single Spring Boot profile: `dev`
@@ -30,7 +37,7 @@ The REST API end points are at:
 
 ## Additional documentation
 You can find more documentation about the project in
-[this medium article](https://medium.com/@martin.hodges). You will also find references 
+[my medium article](https://medium.com/@martin.hodges). You will also find references 
 in this article to other articles that explain how to
 set up a local Kubernetes cluster using Kind.
 
